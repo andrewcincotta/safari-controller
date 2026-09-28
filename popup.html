@@ -1,0 +1,34 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Safari Controller</title>
+    <link rel="stylesheet" href="popup.css" />
+  </head>
+  <body>
+    <main>
+      <h1>Safari Controller</h1>
+
+      <section class="card">
+        <h2>Rename windows</h2>
+        <p class="muted">Custom names are used in this extension instead of dynamic tab-based names.</p>
+        <div id="windowNameList" class="stack"></div>
+      </section>
+
+      <section class="card">
+        <h2>Move tab to window</h2>
+        <label for="tabSelect">Tab</label>
+        <select id="tabSelect"></select>
+
+        <label for="destinationWindowSelect">Destination window</label>
+        <select id="destinationWindowSelect"></select>
+
+        <button id="moveTabButton" type="button">Move tab</button>
+      </section>
+
+      <p id="status" aria-live="polite"></p>
+    </main>
+    <script src="popup.js"></script>
+  </body>
+</html>

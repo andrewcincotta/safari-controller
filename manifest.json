@@ -1,0 +1,11 @@
+{
+  "manifest_version": 3,
+  "name": "Safari Controller",
+  "description": "Rename Safari windows and move tabs between windows.",
+  "version": "1.0.0",
+  "permissions": ["tabs", "storage"],
+  "action": {
+    "default_title": "Safari Controller",
+    "default_popup": "popup.html"
+  }
+}
