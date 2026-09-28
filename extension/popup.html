@@ -1,0 +1,33 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Safari Controller</title>
+  <link rel="stylesheet" href="popup.css">
+</head>
+<body>
+  <main>
+    <h1>Safari Controller</h1>
+
+    <section>
+      <h2>Rename windows</h2>
+      <div id="window-list"></div>
+    </section>
+
+    <section>
+      <h2>Move tab</h2>
+      <label for="tab-select">Tab</label>
+      <select id="tab-select"></select>
+
+      <label for="target-window-select">Target window</label>
+      <select id="target-window-select"></select>
+
+      <button id="move-tab-button" type="button">Move tab</button>
+    </section>
+
+    <p id="status" role="status" aria-live="polite"></p>
+  </main>
+  <script src="popup.js"></script>
+</body>
+</html>
