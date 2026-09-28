@@ -1,0 +1,37 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <link rel="stylesheet" href="popup.css" />
+    <script src="shared.js" defer></script>
+    <script src="popup.js" defer></script>
+  </head>
+  <body>
+    <p id="error" role="alert" hidden></p>
+    <main id="windows"></main>
+    <p class="hint">Drag a tab onto another window, or use its menu to move it.</p>
+
+    <template id="window-template">
+      <section class="window">
+        <header>
+          <input class="window-name" type="text" maxlength="100" aria-label="Window name" />
+          <button class="clear-name" type="button" title="Go back to naming this window after its active tab">
+            Reset
+          </button>
+        </header>
+        <p class="window-meta"></p>
+        <ul class="tabs"></ul>
+      </section>
+    </template>
+
+    <template id="tab-template">
+      <li class="tab" draggable="true">
+        <span class="tab-title"></span>
+        <select class="move-tab" aria-label="Move tab to window">
+          <option value="" selected disabled>Move to…</option>
+        </select>
+      </li>
+    </template>
+  </body>
+</html>
