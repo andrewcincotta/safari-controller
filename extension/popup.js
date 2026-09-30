@@ -24,9 +24,27 @@ async function render() {
     browser.windows.getCurrent(),
     browser.runtime.sendMessage({ type: MSG.GET_STATE }),
   ]);
+  await addYabaiSpaces(windows);
   // This window first, the rest in Safari's order.
   windows.sort((a, b) => (b.id === current.id) - (a.id === current.id));
   windowList.replaceChildren(...windows.map((win) => renderWindow(win, windows, current.id)));
+}
+
+async function addYabaiSpaces(windows) {
+  const candidates = windows.map((win) => {
+    const active = win.tabs.find((tab) => tab.active) ?? win.tabs[0];
+    return { id: win.id, title: win.name || active?.title || "" };
+  });
+
+  try {
+    const response = await browser.runtime.sendNativeMessage("application.id", {
+      type: "getYabaiSpaces",
+      windows: candidates,
+    });
+    for (const win of windows) win.space = response?.spaces?.[win.id] ?? null;
+  } catch (error) {
+    console.warn("Could not read yabai spaces", error);
+  }
 }
 
 function renderWindow(win, windows, currentWindowId) {
@@ -46,7 +64,11 @@ function renderWindow(win, windows, currentWindowId) {
   clearButton.addEventListener("click", () => rename(win.id, ""));
 
   const tabCount = `${win.tabs.length} tab${win.tabs.length === 1 ? "" : "s"}`;
-  const tags = [win.id === currentWindowId && "This window", win.incognito && "Private"].filter(Boolean);
+  const tags = [
+    win.id === currentWindowId && "This window",
+    win.space && (win.space.label || `Space ${win.space.index}`),
+    win.incognito && "Private",
+  ].filter(Boolean);
   section.querySelector(".window-meta").textContent = [...tags, tabCount].join(" · ");
 
   const destinations = windows.filter((other) => other.id !== win.id && other.incognito === win.incognito);
