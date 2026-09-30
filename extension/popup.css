@@ -1,9 +1,27 @@
 :root {
+  color-scheme: light dark;
   --accent: #0a66e4;
-  --border: rgb(128 128 128 / 0.3);
-  --muted: rgb(128 128 128);
-  --hover: rgb(128 128 128 / 0.12);
+  --background: #ffffff;
+  --surface: #f4f4f6;
+  --field-background: #ffffff;
+  --text: #1d1d1f;
+  --border: #c7c7cc;
+  --muted: #636366;
+  --hover: #e9e9ed;
   font: 13px -apple-system, system-ui, sans-serif;
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --accent: #4da3ff;
+    --background: #1c1c1e;
+    --surface: #2c2c2e;
+    --field-background: #3a3a3c;
+    --text: #f5f5f7;
+    --border: #636366;
+    --muted: #c7c7cc;
+    --hover: #3a3a3c;
+  }
 }
 
 body {
@@ -12,6 +30,8 @@ body {
   margin: 0;
   padding: 10px;
   overflow-y: auto;
+  background: var(--background);
+  color: var(--text);
 }
 
 #error {
@@ -27,6 +47,7 @@ body {
   padding: 8px;
   border: 1px solid var(--border);
   border-radius: 8px;
+  background: var(--surface);
 }
 
 .window.current {
@@ -49,10 +70,16 @@ body {
   padding: 4px 6px;
   border: 1px solid var(--border);
   border-radius: 5px;
-  background: transparent;
-  color: inherit;
+  background: var(--field-background);
+  color: var(--text);
   font: inherit;
   font-weight: 600;
+}
+
+.window-name:focus {
+  border-color: var(--accent);
+  outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent);
+  outline-offset: 1px;
 }
 
 .window-meta {
