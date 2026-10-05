@@ -17,6 +17,7 @@
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "49D26E5E3069F12900C41350"
                BuildableName = "Safari Controller.app"
+               BlueprintName = "Safari Controller"
                ReferencedContainer = "container:Safari Controller.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -46,6 +47,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49D26E5E3069F12900C41350"
             BuildableName = "Safari Controller.app"
+            BlueprintName = "Safari Controller"
             ReferencedContainer = "container:Safari Controller.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,6 +64,7 @@
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "49D26E5E3069F12900C41350"
             BuildableName = "Safari Controller.app"
+            BlueprintName = "Safari Controller"
             ReferencedContainer = "container:Safari Controller.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
