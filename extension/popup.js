@@ -94,6 +94,7 @@ function renderWindow(win, windows, currentWindowId) {
 function renderTab(tab, win, destinations) {
   const item = tabTemplate.content.firstElementChild.cloneNode(true);
   item.classList.toggle("active", tab.active);
+  if (tab.active) item.setAttribute("aria-current", "true");
 
   const title = item.querySelector(".tab-title");
   title.textContent = tab.title;
