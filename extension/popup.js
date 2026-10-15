@@ -54,6 +54,10 @@ function renderWindow(win, windows, currentWindowId) {
   const nameInput = section.querySelector(".window-name");
   nameInput.value = win.name ?? "";
   nameInput.placeholder = windowLabel({ ...win, name: null });
+  // The field truncates long titles, so show the full one on hover.
+  const updateTooltip = () => (nameInput.title = nameInput.value || nameInput.placeholder);
+  updateTooltip();
+  nameInput.addEventListener("input", updateTooltip);
   nameInput.addEventListener("keydown", (event) => {
     if (event.key === "Enter") nameInput.blur();
   });
