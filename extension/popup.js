@@ -20,11 +20,12 @@ async function run(action) {
 }
 
 async function render() {
-  const [current, windows] = await Promise.all([
+  const [current, windows, settings] = await Promise.all([
     browser.windows.getCurrent(),
     browser.runtime.sendMessage({ type: MSG.GET_STATE }),
+    getSettings(),
   ]);
-  await addYabaiSpaces(windows);
+  if (settings.yabai) await addYabaiSpaces(windows);
   // This window first, the rest in Safari's order.
   windows.sort((a, b) => (b.id === current.id) - (a.id === current.id));
   windowList.replaceChildren(...windows.map((win) => renderWindow(win, windows, current.id)));

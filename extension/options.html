@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="color-scheme" content="light dark" />
+    <style>
+      body {
+        margin: 0;
+        padding: 16px;
+        font: 13px -apple-system, system-ui, sans-serif;
+      }
+
+      label {
+        display: flex;
+        align-items: flex-start;
+        gap: 8px;
+        margin-bottom: 12px;
+      }
+
+      .description {
+        display: block;
+        margin-top: 2px;
+        opacity: 0.7;
+        font-size: 11px;
+      }
+    </style>
+    <script src="shared.js" defer></script>
+    <script src="options.js" defer></script>
+  </head>
+  <body>
+    <label>
+      <input type="checkbox" name="yabai" />
+      <span>
+        Show yabai spaces
+        <span class="description">Shows which space each window is on, or the space's label if it has one.</span>
+      </span>
+    </label>
+    <label>
+      <input type="checkbox" name="sketchybar" />
+      <span>
+        Refresh sketchybar on rename
+        <span class="description">Sends the <code>mission_control_refresh</code> event after a window is renamed.</span>
+      </span>
+    </label>
+  </body>
+</html>

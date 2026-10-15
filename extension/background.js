@@ -208,6 +208,14 @@ async function renameWindow(windowId, rawName) {
   });
   await syncWindow(windowId);
   scheduleMenuRebuild();
+  // The window titles are pinned now, so sketchybar will read the new name.
+  refreshSketchybar().catch((error) => console.warn("Could not refresh sketchybar", error));
+}
+
+async function refreshSketchybar() {
+  if (!(await getSettings()).sketchybar) return;
+  const response = await browser.runtime.sendNativeMessage("application.id", { type: "triggerSketchybar" });
+  if (response?.error) throw new Error(response.error);
 }
 
 async function moveTab(tabId, target) {

@@ -18,6 +18,19 @@ const MSG = Object.freeze({
 // Move target meaning "open a new window for this tab".
 const NEW_WINDOW = "new";
 
+// User settings, edited on the options page and kept in storage.local.
+const DEFAULT_SETTINGS = Object.freeze({
+  // Show which yabai space each window is on.
+  yabai: false,
+  // Tell sketchybar to refresh when a window is renamed.
+  sketchybar: false,
+});
+
+async function getSettings() {
+  const { settings } = await browser.storage.local.get("settings");
+  return { ...DEFAULT_SETTINGS, ...settings };
+}
+
 function truncate(text, max) {
   return text.length > max ? `${text.slice(0, max - 1)}…` : text;
 }

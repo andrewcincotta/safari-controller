@@ -30,9 +30,13 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
         os_log(.default, "Received message from browser.runtime.sendNativeMessage: %@ (profile: %@)", String(describing: message), profile?.uuidString ?? "none")
 
         let responseMessage: [String: Any]
-        if let message = message as? [String: Any], message["type"] as? String == "getYabaiSpaces" {
-            responseMessage = yabaiSpaces(for: message["windows"] as? [[String: Any]] ?? [])
-        } else {
+        let body = message as? [String: Any]
+        switch body?["type"] as? String {
+        case "getYabaiSpaces":
+            responseMessage = yabaiSpaces(for: body?["windows"] as? [[String: Any]] ?? [])
+        case "triggerSketchybar":
+            responseMessage = triggerSketchybar()
+        default:
             responseMessage = ["echo": message as Any]
         }
 
@@ -79,14 +83,38 @@ class SafariWebExtensionHandler: NSObject, NSExtensionRequestHandling {
 #endif
     }
 
+    /// Fires sketchybar's `mission_control_refresh` event so bar items showing
+    /// Safari window titles pick up a renamed window.
+    private func triggerSketchybar() -> [String: Any] {
 #if os(macOS)
-    private func runYabai(arguments: [String]) throws -> Data {
-        let candidates = ["/opt/homebrew/bin/yabai", "/usr/local/bin/yabai", "/usr/bin/yabai"]
+        do {
+            let process = Process()
+            process.executableURL = URL(fileURLWithPath: try findExecutable("sketchybar"))
+            process.arguments = ["--trigger", "mission_control_refresh"]
+            try process.run()
+            return ["ok": true]
+        } catch {
+            os_log(.error, "Could not trigger sketchybar: %@", error.localizedDescription)
+            return ["ok": false, "error": error.localizedDescription]
+        }
+#else
+        return ["ok": false]
+#endif
+    }
+
+#if os(macOS)
+    private func findExecutable(_ name: String) throws -> String {
+        let candidates = ["/opt/homebrew/bin", "/usr/local/bin", "/usr/bin"].map { "\($0)/\(name)" }
         guard let executable = candidates.first(where: FileManager.default.isExecutableFile(atPath:)) else {
             throw NSError(domain: "SafariController", code: 1, userInfo: [
-                NSLocalizedDescriptionKey: "yabai was not found in /opt/homebrew/bin or /usr/local/bin."
+                NSLocalizedDescriptionKey: "\(name) was not found in /opt/homebrew/bin or /usr/local/bin."
             ])
         }
+        return executable
+    }
+
+    private func runYabai(arguments: [String]) throws -> Data {
+        let executable = try findExecutable("yabai")
 
         let process = Process()
         let output = Pipe()

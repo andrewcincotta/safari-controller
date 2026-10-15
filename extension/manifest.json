@@ -28,6 +28,9 @@
       "run_at": "document_start"
     }
   ],
+  "options_ui": {
+    "page": "options.html"
+  },
   "action": {
     "default_popup": "popup.html",
     "default_title": "Safari Controller",
